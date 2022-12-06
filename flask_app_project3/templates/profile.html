@@ -4,8 +4,8 @@ Profile Page
 {% endblock %}
 {% block nav %}
     <nav id="nav">
-        <a href="{{ url_for('profile', username= current_user.username) }}">Profile</a>
         <a href="{{ url_for('user_home', username= current_user.username) }}">User Home</a>
+        <a href="{{ url_for('profile', username= current_user.username) }}">Profile</a>
         <a href="{{ url_for('groups', username= current_user.username) }}">Group List</a>
         <a href="{{ url_for('logout') }}">Log Out</a>
     </nav>

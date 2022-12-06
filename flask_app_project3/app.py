@@ -5,7 +5,6 @@ from flask import Flask, render_template, flash, url_for, redirect
 # from datetime import datetime
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-#from wtforms.fields.html5 import Datefield
 from wtforms.validators import DataRequired, Email, EqualTo 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -151,10 +150,11 @@ class EventForm(FlaskForm):
 class AttendForm(FlaskForm):
     submit= SubmitField(label='Attend')
 
+####All the routes
+
 @app.route("/")
 def home():
     return render_template("first.html")
-    #return "Hello"
 
 @app.route("/first/")
 def first():
@@ -182,7 +182,6 @@ def signup():
                 return reason
             login_user(user)
             return '<h1>New User has been created!</h1> <br> <a href= /> Back</a>'  
-        flash("A user already exists with that email address.")
         print("A user already exists with that email address.")
     return render_template("signup.html", title="Sign Up Page", form = form)
 
@@ -190,24 +189,19 @@ def signup():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        existing_user = User.query.filter_by(email=form.email.data).first()
-        
+        existing_user = User.query.filter_by(email=form.email.data).first() 
         if existing_user is None or not existing_user.check_password(form.password.data):
-            flash("Invalid username or password!")
             print("Invalid username or password!")
-            #return redirect(url_for('events'))
             return render_template("login.html", form=form)
 
         login_user(existing_user, remember=form.remember_me.data)
-        #user = User(username=form.username.data, email=form.email.data)
-        flash("Successful!")
         print("Successful!")
-        ##### changed first to events page
         return redirect(url_for('user_home', username=current_user.username))
 
-    flash("Failure")
     print("Failure")
     return render_template("login.html", title="Login Page", form = form)
+
+#####All routes after login is required
 
 @app.route("/logout")
 @login_required
@@ -216,6 +210,7 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route("/user/<username>/event/<eventName>", methods=['GET', 'POST'] )
+@login_required
 def event(eventName, username):
     form= AttendForm()
     event = Event.query.filter_by(eventName=eventName).first_or_404()
@@ -247,6 +242,7 @@ def event(eventName, username):
     # return render_template('event.html', event=event, form=form, attendees= attendees)
 
 @app.route("/event/<eventName>/attendees", methods=['GET', 'POST'] )
+@login_required
 def view_attendees(eventName):
     event = Event.query.filter_by(eventName= eventName).first_or_404()
     attendees= Attendees.query.filter_by(event_id= event.id).all()
@@ -312,7 +308,7 @@ def createEvent(username, groupName):
             event= Event(eventName= form.eventName.data, time= form.time.data, location= form.location.data, description= form.description.data, host_id= host.id, group_id=group.id)
             db.session.add(event)
             db.session.commit()
-            return '<h1>New Event has been created!</h1> <br> <a href=/user/<username>/viewGroup/<groupName> Back</a>' 
+            return '<h1>New Event has been created!</h1> <br> <a href=/user/<username>/viewGroup/<groupName>/> Back</a>' 
         print("Event already exists with that name")
     print(form.errors)
     return render_template("createEvent.html", username=username, form= form, groupName= groupName)
