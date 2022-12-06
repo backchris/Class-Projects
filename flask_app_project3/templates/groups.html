@@ -15,14 +15,25 @@ Enrolled Groups
             <h1>{{current_user.username}}'s Groups</h1>
 
             <a href="{{ url_for('createGroup', username= current_user.username) }}">Create a group</a>
-        {% for group in groups %}
-            <div>
-                <h2>{{group.groupName}}</h2>
-                <p>{{group.creator.username}}</p>
-                <!-- button to route to specific group name that contains events -->
-            </div>
-        {% endfor %}
-        {% else %}
-            <p class="message">Provide the name after /user/ in the URL</p>
-        {% endif %}
+            {% if groups %}
+                {% for group in groups %}
+                <div>
+                    {% include '_group.html' %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>Not enrolled in any groups</p>
+            {% endif %}
+            
+            <h1>All Groups</h1>
+            {% for group in allGroups %}
+                <div>
+                    {% include '_group.html' %}
+                </div>
+            {% endfor %}
+
+
+            {% else %}
+                <p class="message">Provide the name after /user/ in the URL</p>
+            {% endif %}
 {% endblock %}

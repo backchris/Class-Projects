@@ -5,6 +5,7 @@ from flask import Flask, render_template, flash, url_for, redirect
 # from datetime import datetime
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+#from wtforms.fields.html5 import Datefield
 from wtforms.validators import DataRequired, Email, EqualTo 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -111,7 +112,7 @@ class Attendees(db.Model):
     __tablename__="attendees"
     id = db.Column(db.Integer, primary_key = True)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
-    attendee_id = db.Column(db.String(15), db.ForeignKey('user.id'))
+    attendee_id = db.Column(db.String(15), db.ForeignKey('user.username'))
 
     def __repr__(self) -> str:
         return '<Attendees for Event {}>'.format(self.event_id)
@@ -217,26 +218,33 @@ def logout():
 @app.route("/user/<username>/event/<eventName>", methods=['GET', 'POST'] )
 def event(eventName, username):
     form= AttendForm()
-    event = Event.query.filter_by(eventName= eventName).first_or_404()
-    print("ho")
+    event = Event.query.filter_by(eventName=eventName).first_or_404()
+    host= User.query.get(event.host_id).username
+    numAttendees= Attendees.query.filter_by(event_id=eventName).all()
     if form.validate_on_submit():
-        print('deez')
-        attendees= Attendees.query.filter_by(event_id=event.id).all()
-        print(attendees)
-        attendee = Attendees(event_id= event.id, attendee_id=current_user.id)
-        if not attendees:
-            print('nutty')
+        if len(numAttendees) < 8:
+            for attendee in numAttendees:
+                if attendee.attendee_id == username:
+                    return render_template('event.html', event=event, form=form, attendees= numAttendees, host= host )
+            attendee = Attendees(event_id=eventName, attendee_id=username)
             db.session.add(attendee)
             db.session.commit()
-        elif len(attendees) < 8:
-            print("nuts")
-            for attendee in attendees:
-                if attendee.attendee_id == current_user.id:
-                    return render_template('event.html', event=event, form=form )
-            db.session.add(attendee)
-            db.session.commit()
-        print(form.errors)
-    return render_template('event.html', event=event, form=form)
+        return render_template('event.html', event=event, form=form, attendees= numAttendees, host= host )
+    else:
+        return render_template('event.html', event=event, form=form, attendees= numAttendees, host= host )
+    # event = Event.query.filter_by(eventName= eventName).first_or_404()
+    # print("ho")
+    # attendees= Attendees.query.filter_by(event_id=event.id).all()
+    # if form.validate_on_submit():
+    #     print(attendees)
+    #     attendee = Attendees(event_id= event.id, attendee_id=current_user.id)
+    #     if len(attendees) < 8:
+    #         for attendee in attendees:
+    #             if attendee.attendee_id == current_user.id:
+    #                 return render_template('event.html', event=event, form=form, attendees= attendees )
+    #         db.session.add(attendee)
+    #         db.session.commit()
+    # return render_template('event.html', event=event, form=form, attendees= attendees)
 
 @app.route("/event/<eventName>/attendees", methods=['GET', 'POST'] )
 def view_attendees(eventName):
@@ -279,7 +287,9 @@ def profile(username):
 @app.route("/user/<username>/groups", methods=['GET', 'POST'] )
 @login_required
 def groups(username):
-    return render_template("groups.html", username=username)
+    groups= current_user.groups
+    allGroups= Group.query.all()
+    return render_template("groups.html", username=username, allGroups= allGroups, groups= groups)
 
 @app.route("/user/")
 @app.route("/user/<username>/viewGroup/<groupName>", methods=['GET', 'POST'] )

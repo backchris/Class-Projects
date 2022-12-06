@@ -17,15 +17,21 @@ Events Page
 <h2>Event Description</h2>
 {{event.description}} 
 
+<h2>Event Host</h2>
+{{host}} 
+
 <h2>Event Created On</h2>
 {{event.timestamp}} 
 
 <h2>Attendees</h2>
-{{event.attendees}} 
-
 <form action="" method="post" novalidate>
     {{ form.hidden_tag() }}
     {{ form.submit() }}
 </form>
+{% for attendee in attendees %}
+    <div>
+        {% include '_attendee.html' %}
+    </div>
+{% endfor %}
 
 {% endblock %}
