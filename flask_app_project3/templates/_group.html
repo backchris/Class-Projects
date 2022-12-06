@@ -1,0 +1,17 @@
+<table>
+    <thead>
+        <tr>
+            <th>Creator</th>
+            <th>Group</th>
+            <th>View</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>{{ group.creator.username }}</td>
+            <td>{{ group.groupName }}</td>
+            <td><a href="{{ url_for('viewGroup', username= group.creator.username, groupName= group.groupName) }}">View Group</a></td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}
+Events in Group 
+{% endblock %}
+{% block content %}
+
+<h1>The events happening in Group {{group}}</h1>
+<br>
+
+{% for event in events %}
+    {% include '_event.html' %}
+{% endfor %}  
+<br>
+
+
+<a href="{{ url_for('createEvent', groupName= group, username= username) }}">Create an Event</a>
+
+{% endblock %}

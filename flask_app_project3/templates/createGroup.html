@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}
+Create a group
+{% endblock %}
+{% block content %}
+<h1>Create a Group</h1>
+<a href="{{ url_for('profile', username= current_user.username) }}">Back to Profile</a>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+<p>
+    {{ form.groupName.label }}<br>
+    {{ form.groupName(size=28)}}
+</p>
+<p>
+    {{ form.submit() }}
+</p>
+</form>
+{% endblock %}

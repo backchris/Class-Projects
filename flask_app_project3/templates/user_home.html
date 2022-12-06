@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block title %}
+user Page
+{% endblock %}
+{% block nav %}
+    <nav id="nav">
+        <a href="{{ url_for('profile', username= current_user.username) }}">Profile</a>
+        <a href="{{ url_for('user_home', username= current_user.username) }}">User Home</a>
+        <a href="{{ url_for('groups', username= current_user.username) }}">Group List</a>
+        <a href="{{ url_for('logout') }}">Log Out</a>
+        
+    </nav>
+{% endblock %}
+{% block content %}
+        {%  if current_user.is_authenticated %}
+            <h1>{{current_user.username}}'s Webpage</h1>
+            This is {{current_user.username}}'s personal webpage.<br>
+           
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+            <p>
+                {{ form.message.label }}<br>
+                {{ form.message(size=150)}}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+            </form>
+
+            <h1>The groups that {{current_user.username}} is in</h1>
+            {% for group in groups %}
+                {% include '_group.html' %}
+            {% endfor %}  
+            <br>
+            <a href="{{ url_for('createGroup', username= current_user.username) }}">Create a group</a>
+        {% else %}
+            <p class="message">Provide the name after /user/ in the URL</p>
+        {% endif %}
+{% endblock %}
+
+
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css') }}" />
+        <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
+    </head>
+    <body>
+        {%  if name %}
+            <h1>{{name}}'s Webpage</h1>
+            This is {{name}}'s personal webpage.
+        {% else %}
+            <p class="message">Provide the name after /user/ in the URL</p>
+        {% endif %}
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyBt-PqXx5syvkvxN8_iYcjfGCKZFeecy2A",
+              authDomain: "my-firebase-project-a9f7d.firebaseapp.com",
+              databaseURL: "https://my-firebase-project-a9f7d.firebaseio.com",
+              projectId: "my-firebase-project-a9f7d",
+              storageBucket: "my-firebase-project-a9f7d.appspot.com",
+              messagingSenderId: "700788091736",
+              appId: "1:700788091736:web:e8d712868a2d6b7b1ed32d"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+          </script>
+    </body>
+</html> -->

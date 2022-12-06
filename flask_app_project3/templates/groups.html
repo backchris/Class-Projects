@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}
+Enrolled Groups
+{% endblock %}
+{% block nav %}
+    <nav id="nav">
+        <a href="{{ url_for('profile', username= current_user.username) }}">Profile</a>
+        <a href="{{ url_for('user_home', username= current_user.username) }}">User Home</a>
+        <a href="{{ url_for('groups', username= current_user.username) }}">Group List</a>
+        <a href="{{ url_for('logout') }}">Log Out</a>
+    </nav>
+{% endblock %}
+{% block content %}
+        {%  if current_user.is_authenticated %}
+            <h1>{{current_user.username}}'s Groups</h1>
+
+            <a href="{{ url_for('createGroup', username= current_user.username) }}">Create a group</a>
+        {% for group in groups %}
+            <div>
+                <h2>{{group.groupName}}</h2>
+                <p>{{group.creator.username}}</p>
+                <!-- button to route to specific group name that contains events -->
+            </div>
+        {% endfor %}
+        {% else %}
+            <p class="message">Provide the name after /user/ in the URL</p>
+        {% endif %}
+{% endblock %}

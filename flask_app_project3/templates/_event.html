@@ -1,0 +1,15 @@
+<table>
+    <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>View</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>{{ event.eventName }}</td>
+            <td><a href="{{ url_for('event', eventName= event.eventName) }}">View Event</a></td>
+        </tr>
+    </tbody>
+</table>

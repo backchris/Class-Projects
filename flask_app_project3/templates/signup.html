@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}
+Sign Up
+{% endblock %}
+{% block content %}
+<h1>Sign Up</h1>
+<a href="{{ url_for('login') }}">Login Here</a>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+<p>
+    {{ form.username.label }}<br>
+    {{ form.username(size=28)}}
+</p>
+<p>
+    {{ form.email.label }}<br>
+    {{ form.email(size=28)}}
+</p>
+<p>
+    {{ form.password.label }}<br>
+    {{ form.password(size=28)}}
+</p>
+<p>
+    {{ form.confirm.label }}<br>
+    {{ form.confirm(size=28)}}
+</p>
+<p>
+    {{ form.location.label }}<br>
+    {{ form.location(size=28)}}
+</p>
+<p>
+    {{ form.bio.label }}<br>
+    {{ form.bio(size=28)}}
+</p>
+<p>
+    {{ form.submit() }}
+</p>
+</form>
+{% endblock %}
