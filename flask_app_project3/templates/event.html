@@ -3,5 +3,29 @@
 Events Page
 {% endblock %}
 {% block content %}
-<p>This has all details for event {{event}}</p>
+<p>This has all details for event {{event.eventName}}</p>
+
+<h2>Event Name </h2>
+{{event.eventName}} 
+
+<h2>Event Time</h2>
+{{event.time}} 
+
+<h2>Event Location</h2>
+{{event.location}}
+
+<h2>Event Description</h2>
+{{event.description}} 
+
+<h2>Event Created On</h2>
+{{event.timestamp}} 
+
+<h2>Attendees</h2>
+{{event.attendees}} 
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.submit() }}
+</form>
+
 {% endblock %}

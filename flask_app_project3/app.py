@@ -3,7 +3,7 @@ from turtle import title
 from wsgiref.validate import validator
 from flask import Flask, render_template, flash, url_for, redirect
 # from datetime import datetime
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo 
 from flask_sqlalchemy import SQLAlchemy
@@ -27,6 +27,9 @@ migrate = Migrate(app, db)
 #####
 db.init_app(app)
 
+# csrf = CSRFProtect()
+# csrf.init_app(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -44,16 +47,16 @@ class User(UserMixin, db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(15), nullable= False, unique=True)
-    #, unique=True
     email = db.Column(db.String(50), nullable= False, unique=True)
-    #, unique=True
     password_hash = db.Column(db.String(80), nullable= False)
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
     joined_date = db.Column(db.DateTime, default= datetime.datetime.utcnow)
     location = db.Column(db.String(50), nullable= False)
     bio= db.Column(db.String(500), nullable=True)
+
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
     groups= db.relationship('Group', backref='creator', lazy='dynamic')
     events= db.relationship('Event',backref= 'host', lazy= 'dynamic')
+    attending= db.relationship('Attendees',backref='participant', lazy='dynamic')
 
 
 
@@ -84,8 +87,6 @@ class Group(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     events= db.relationship('Event',backref= 'group', lazy= 'dynamic')
-    #event_id
-
 
     def __repr__(self) -> str:
         return '<Group {}>'.format(self.groupName)
@@ -101,13 +102,20 @@ class Event(db.Model):
 
     host_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     group_id= db.Column(db.Integer, db.ForeignKey('group.id'))
-    #attendees
-    #event_id
-
-
+    attendees= db.relationship('Attendees',backref= 'function', lazy= 'dynamic')
 
     def __repr__(self) -> str:
         return '<Event {}>'.format(self.eventName)
+
+class Attendees(db.Model):
+    __tablename__="attendees"
+    id = db.Column(db.Integer, primary_key = True)
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    attendee_id = db.Column(db.String(15), db.ForeignKey('user.id'))
+
+    def __repr__(self) -> str:
+        return '<Attendees for Event {}>'.format(self.event_id)
+
 
 class SignUpForm(FlaskForm):
     username = StringField('Name', render_kw={'placeholder': 'Please input Name'}, validators=[DataRequired()])
@@ -119,7 +127,6 @@ class SignUpForm(FlaskForm):
     submit = SubmitField('Sign Up')
     
 class LoginForm(FlaskForm):
-    # username = StringField('Username', render_kw={'placeholder': 'Please input Name'}, validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('remember me')
@@ -139,6 +146,9 @@ class EventForm(FlaskForm):
     location= StringField('Location', render_kw={'placeholder': 'Please input location'}, validators= [DataRequired()])
     description= StringField('Description', render_kw={'placeholder': 'Please input event description'})
     submit = SubmitField('Create Event')
+
+class AttendForm(FlaskForm):
+    submit= SubmitField(label='Attend')
 
 @app.route("/")
 def home():
@@ -204,9 +214,35 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/event/<eventName>", methods=['GET', 'POST'] )
-def event(eventName):
-    return render_template("event.html", event= eventName)
+@app.route("/user/<username>/event/<eventName>", methods=['GET', 'POST'] )
+def event(eventName, username):
+    form= AttendForm()
+    event = Event.query.filter_by(eventName= eventName).first_or_404()
+    print("ho")
+    if form.validate_on_submit():
+        print('deez')
+        attendees= Attendees.query.filter_by(event_id=event.id).all()
+        print(attendees)
+        attendee = Attendees(event_id= event.id, attendee_id=current_user.id)
+        if not attendees:
+            print('nutty')
+            db.session.add(attendee)
+            db.session.commit()
+        elif len(attendees) < 8:
+            print("nuts")
+            for attendee in attendees:
+                if attendee.attendee_id == current_user.id:
+                    return render_template('event.html', event=event, form=form )
+            db.session.add(attendee)
+            db.session.commit()
+        print(form.errors)
+    return render_template('event.html', event=event, form=form)
+
+@app.route("/event/<eventName>/attendees", methods=['GET', 'POST'] )
+def view_attendees(eventName):
+    event = Event.query.filter_by(eventName= eventName).first_or_404()
+    attendees= Attendees.query.filter_by(event_id= event.id).all()
+    return render_template('attending.html', attendees= attendees, eventName= eventName )
 
 @app.route("/user/")
 @app.route("/user/<username>", methods=['GET', 'POST'] )

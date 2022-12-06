@@ -9,7 +9,7 @@
     <tbody>
         <tr>
             <td>{{ event.eventName }}</td>
-            <td><a href="{{ url_for('event', eventName= event.eventName) }}">View Event</a></td>
+            <td><a href="{{ url_for('event', eventName= event.eventName, username= current_user.username) }}">View Event</a></td>
         </tr>
     </tbody>
 </table>
