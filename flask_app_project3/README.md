@@ -1,5 +1,4 @@
-# This is my final project for 
-# ITSS 4312.501 - Mobile Web Application Development - F22
+# This is my final project for ITSS 4312.501 - Mobile Web Application Development - F22
 
 (Most of the effort on this project was spent on the backend components, frontend/UI effort was minimal!)
 
