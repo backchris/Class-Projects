@@ -1,14 +1,14 @@
 # This is my final project for 
 # ITSS 4312.501 - Mobile Web Application Development - F22
 
-# To execute this project on MAC,  
-# Create a local virtual environment
+To execute this project on MAC,  
+Create a local virtual environment
 python3 -m venv venv
 
-# Activate this virtual environment
+Activate this virtual environment
 source venv/bin/activate
 
-# Install all the packages in requirements.txt (I've updated this)
+Install all the packages in requirements.txt (I've updated this)
 pip3 install -r requirements.txt
 
 ########################################################
