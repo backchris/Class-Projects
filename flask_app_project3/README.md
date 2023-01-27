@@ -3,6 +3,8 @@
 
 (Most of the effort on this project was spent on the backend components, frontend/UI effort was minimal!)
 
+# Instructions to run file
+
 To execute this project on MAC,  
 Create a local virtual environment
 python3 -m venv venv
@@ -30,9 +32,21 @@ Personal Touch
 Used an API from unsplash.com to have a dynamically changing nature 
 background embedded into CSS.
 
+# Assignment
+In this project, you will build on a website using Python with Flask, which organizes online groups that host in-person events for people with similar interests. Users will be able to sign in your site, create a group along with events under the group, as well as check and join existing groups and events. Once a group is selected, users will be able to see all the relative events with date, time, title, online/face-to-face, and the number of attendees. Users can further click to attend an event. (similar to Meetup)
 
-#######
-Description of files
+Essential Requirements
+Write a Meetup web app using Flask and Python. The appearance and design of the pages are entirely up to you. However, your website has to meet the following requirements:
+
+User Authentication: When a user visits your web application for the first time, they should be able to sign up with a unique email and password. 
+User Profile: Once a user logged in, they should be able to see their profiles listed with name, location, joined date, and an optional bio. 
+Group List: Users should be able to see a list of all current groups, and selecting one should allow the user to view the group. You may decide how to display the list.
+Group Creation: Any authorized user should be able to create a group with a unique group name.
+Event View: Once a group is selected, the user should see any events that have already been created in the group. All the events should be grouped by day and listed in ascending order of time.
+Attending Events: Once in an event, users should be able to see event title, time, location, host, description, and a list of all attendees, up to a maximum of 8 attendees. However, you should provide a See all link for showing all attendees of the event.
+
+
+# Description of files
 
 
 app.py
