@@ -38,12 +38,12 @@ In this project, you will build on a website using Python with Flask, which orga
 Essential Requirements
 Write a Meetup web app using Flask and Python. The appearance and design of the pages are entirely up to you. However, your website has to meet the following requirements:
 
-User Authentication: When a user visits your web application for the first time, they should be able to sign up with a unique email and password. 
-User Profile: Once a user logged in, they should be able to see their profiles listed with name, location, joined date, and an optional bio. 
-Group List: Users should be able to see a list of all current groups, and selecting one should allow the user to view the group. You may decide how to display the list.
-Group Creation: Any authorized user should be able to create a group with a unique group name.
-Event View: Once a group is selected, the user should see any events that have already been created in the group. All the events should be grouped by day and listed in ascending order of time.
-Attending Events: Once in an event, users should be able to see event title, time, location, host, description, and a list of all attendees, up to a maximum of 8 attendees. However, you should provide a See all link for showing all attendees of the event.
+- User Authentication: When a user visits your web application for the first time, they should be able to sign up with a unique email and password. 
+- User Profile: Once a user logged in, they should be able to see their profiles listed with name, location, joined date, and an optional bio. 
+- Group List: Users should be able to see a list of all current groups, and selecting one should allow the user to view the group. You may decide how to display the list.
+- Group Creation: Any authorized user should be able to create a group with a unique group name.
+- Event View: Once a group is selected, the user should see any events that have already been created in the group. All the events should be grouped by day and listed in ascending order of time.
+- Attending Events: Once in an event, users should be able to see event title, time, location, host, description, and a list of all attendees, up to a maximum of 8 attendees. However, you should provide a See all link for showing all attendees of the event.
 
 
 # Description of files
