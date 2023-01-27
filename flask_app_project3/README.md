@@ -1,6 +1,8 @@
 # This is my final project for 
 # ITSS 4312.501 - Mobile Web Application Development - F22
 
+(Most of the effort on this project was spent on the backend components, frontend/UI effort was minimal!)
+
 To execute this project on MAC,  
 Create a local virtual environment
 python3 -m venv venv
@@ -87,8 +89,6 @@ site.css
 ![Screen Shot 2023-01-27 at 2 00 18 AM](https://user-images.githubusercontent.com/70988841/215037488-c58e3c7a-8548-4a86-aa18-3821d294889c.png)
 ![Screen Shot 2023-01-27 at 2 00 28 AM](https://user-images.githubusercontent.com/70988841/215037510-9b948541-dbcf-45bd-8ea5-6985999d3db1.png)
 ![Screen Shot 2023-01-27 at 2 00 47 AM](https://user-images.githubusercontent.com/70988841/215037524-42f74579-86f3-40cd-8390-720ef9283025.png)
-
-
-
-
-
+![Screen Shot 2023-01-27 at 2 06 03 AM](https://user-images.githubusercontent.com/70988841/215037792-894d224d-80c8-4e90-8f71-640b083daf0a.png)
+![Screen Shot 2023-01-27 at 2 06 10 AM](https://user-images.githubusercontent.com/70988841/215037806-3a43596e-e9e6-43c5-a3ad-948eb1318592.png)
+![Uploading Screen Shot 2023-01-27 at 2.06.19 AM.png…]()
