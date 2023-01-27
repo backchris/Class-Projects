@@ -81,4 +81,14 @@ This is a dummy page
 site.css
 #This has all the styling elements, and is imported in all the html pages
 
+![Screen Shot 2023-01-27 at 2 00 40 AM](https://user-images.githubusercontent.com/70988841/215037306-8346aa9a-6cb6-450d-8df5-7af3f408c22b.png)
+![Screen Shot 2023-01-27 at 1 59 32 AM](https://user-images.githubusercontent.com/70988841/215037418-d9d1ca2f-e774-49f1-847b-478cde8c98c4.png)
+![Screen Shot 2023-01-27 at 2 00 10 AM](https://user-images.githubusercontent.com/70988841/215037477-0e93eb04-a8f5-4259-8319-987576c777d8.png)
+![Screen Shot 2023-01-27 at 2 00 18 AM](https://user-images.githubusercontent.com/70988841/215037488-c58e3c7a-8548-4a86-aa18-3821d294889c.png)
+![Screen Shot 2023-01-27 at 2 00 28 AM](https://user-images.githubusercontent.com/70988841/215037510-9b948541-dbcf-45bd-8ea5-6985999d3db1.png)
+![Screen Shot 2023-01-27 at 2 00 47 AM](https://user-images.githubusercontent.com/70988841/215037524-42f74579-86f3-40cd-8390-720ef9283025.png)
+
+
+
+
 
